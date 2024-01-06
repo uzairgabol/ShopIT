@@ -14,8 +14,7 @@ import {
   updateUser,
 } from "../controllers/authControllers.js";
 import { authorizeRoles, isAuthenticatedUser } from "../middlewares/auth.js";
-import catchAsyncErrors from "../middlewares/catchAsyncErrors.js";
-import ErrorHandler from "../utils/errorHandler.js";
+
 const router = express.Router();
 
 router.route("/register").post(registerUser);

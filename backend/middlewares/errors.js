@@ -12,6 +12,24 @@ export default (err, req, res, next) => {
     error = new ErrorHandler(message, 404);
   }
 
+  //Handle Duplicate Mongoose Id error
+  if (err.code === 11000) {
+    const message = `${Object.keys(err.keyValue)} Already Exists!`;
+    error = new ErrorHandler(message, 400);
+  }
+
+  //Handle wrong JWT error
+  if (err.name === "JsonWebTokenError") {
+    const message = `JSON Web Token is invalid. Try Again!!!`;
+    error = new ErrorHandler(message, 400);
+  }
+
+  //Handle expired JWT error
+  if (err.name === "TokenExpiredError") {
+    const message = `JSON Web Token is expired. Try Again!!!`;
+    error = new ErrorHandler(message, 400);
+  }
+
   // Handle Validation Error
   if (err.name === "ValidationError") {
     const message = Object.values(err.errors).map((value) => value.message);
